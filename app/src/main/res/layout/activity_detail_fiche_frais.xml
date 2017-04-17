@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context="applicationfrais.gsb.com.applicationfrais.DetailFicheFraisActivity">
+
+    <LinearLayout
+        android:layout_width="338dp"
+        android:layout_height="465dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lignes frais forfait"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/compteur_lff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="14dp"/>
+
+        <ListView
+            android:id="@+id/ligne_frais_forfait_lv"
+            android:layout_width="match_parent"
+            android:layout_height="175dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lignes frais hors forfait"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/compteur_lfhf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="14dp"/>
+
+        <ListView
+            android:id="@+id/ligne_frais_hors_forfait_lv"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
