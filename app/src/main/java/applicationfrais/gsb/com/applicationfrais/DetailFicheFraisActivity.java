@@ -57,12 +57,10 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
         // Recuperation de la l'id de la fiche
         Intent i = getIntent();
         fichefraisId = i.getIntExtra("id", 0);
-        // Toast.makeText(getApplicationContext(), "Id fiche frais : " + fichefraisId, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -82,8 +80,6 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
@@ -103,7 +99,7 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
 
         protected String doInBackground(String... args) {
             JSONObject json = jParser.makeHttpRequest(URL_DETAIL + fichefraisId, "GET", null);
-            Log.i("Reponse detail ====>", json.toString());
+            Log.i("JSONDetail ====>", json.toString());
             try {
                 // Recuperation des donnees en JSON
                 JSONDetail.Success = json.getInt(Global.TAG_SUCCESS);
@@ -111,9 +107,9 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
 
                 // Recuperation des lignes frait forfait
                 try {
-                    JSONArray ligneFF = json.getJSONArray(Global.TAG_LIGNE_F);
-                    Log.i("Frais forfait ========>", ligneFF.toString());
-                    if (ligneFF != null && ligneFF.length() > 0) {
+                    JSONArray ligneFF = json.getJSONArray(Global.TAG_LIGNE_FRAIS_FORFAIT);
+                    Log.i("FraisForfait =====>", ligneFF.toString());
+                    if (ligneFF.length() > 0) {
                         for (int i = 0; i < ligneFF.length(); i++) {
                             JSONObject c = ligneFF.getJSONObject(i);
 
@@ -126,14 +122,14 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-                    Log.i("Parse error ====>", e.getMessage());
+                    Log.e("FraisForfait ===>", e.getMessage());
                 }
 
                 // Recuperation des lignes frait hors forfait
                 try {
-                    JSONArray ligneFHF = json.getJSONArray(Global.TAG_LIGNE_HF);
-                    Log.i("Frais hors forfait ==>", ligneFHF.toString());
-                    if (ligneFHF != null && ligneFHF.length() > 0) {
+                    JSONArray ligneFHF = json.getJSONArray(Global.TAG_LIGNE_HORS_FORFAIT);
+                    Log.i("FraisHorsForfait =====>", ligneFHF.toString());
+                    if (ligneFHF.length() > 0) {
                         for (int i = 0; i < ligneFHF.length(); i++) {
                             JSONObject c = ligneFHF.getJSONObject(i);
 
@@ -146,7 +142,7 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-                    Log.i("Parse error ====>", e.getMessage());
+                    Log.e("FraisHorsForfait =====>", e.getMessage());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -175,7 +171,7 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
         }
     }
 
-    class LigneFraisForfaitAdapter extends ArrayAdapter<LigneFraisForfait> {
+    private class LigneFraisForfaitAdapter extends ArrayAdapter<LigneFraisForfait> {
 
         public LigneFraisForfaitAdapter(Context context, ArrayList<LigneFraisForfait> lignes) {
             super(context, 0, lignes);
@@ -201,7 +197,7 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
         }
     }
 
-    class LigneFraisHorsForfaitAdapter extends ArrayAdapter<LigneFraisHorsForfait> {
+    private class LigneFraisHorsForfaitAdapter extends ArrayAdapter<LigneFraisHorsForfait> {
 
         public LigneFraisHorsForfaitAdapter(Context context, ArrayList<LigneFraisHorsForfait> lignes) {
             super(context, 0, lignes);
@@ -219,10 +215,11 @@ public class DetailFicheFraisActivity extends AppCompatActivity {
             TextView tvLibelle = (TextView) convertView.findViewById(R.id.item_lfhf_libelle);
             TextView tvMontant = (TextView) convertView.findViewById(R.id.item_lfhf_montant);
 
-            tvId.setText(String.valueOf(ligne.Id));
-            tvLibelle.setText(String.valueOf(ligne.Libelle));
-            tvMontant.setText(String.valueOf(ligne.Montant));
-
+            if (ligne != null) {
+                tvId.setText(String.valueOf(ligne.Id));
+                tvLibelle.setText(String.valueOf(ligne.Libelle));
+                tvMontant.setText(String.valueOf(ligne.Montant));
+            }
             return convertView;
         }
     }

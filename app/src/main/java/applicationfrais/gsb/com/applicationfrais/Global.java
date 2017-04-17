@@ -1,7 +1,5 @@
 package applicationfrais.gsb.com.applicationfrais;
 
-import applicationfrais.gsb.com.applicationfrais.Classes.Utilisateur;
-
 public class Global {
     public static applicationfrais.gsb.com.applicationfrais.Classes.Utilisateur Utilisateur;
 
@@ -12,8 +10,8 @@ public class Global {
     public static final String TAG_LOGIN = "login";
     public static final String TAG_NOM = "nom";
     public static final String TAG_PRENOM = "prenom";
-    public static final String TAG_LIGNE_F = "ligneFraisForfait";
-    public static final String TAG_LIGNE_HF = "ligneFraisHorsForfait";
+    public static final String TAG_LIGNE_FRAIS_FORFAIT = "ligneFraisForfait";
+    public static final String TAG_LIGNE_HORS_FORFAIT = "ligneFraisHorsForfait";
     public static final String TAG_FRAIS_FORFAIT = "fraisForfait";
     public static final String TAG_MONTANT = "montant";
     public static final String TAG_LIBELLE = "libelle";

@@ -38,7 +38,7 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
     private JSONFicheFrais JSONFicheFrais = new JSONFicheFrais();
 
     private ListView listeFicheLv;
-    private TextView titreTv, compteurFfTv;
+    private TextView compteurFfTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,6 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_liste_fiche_frais);
         setTitle("Fiches frais");
 
-        titreTv = (TextView) findViewById(R.id.titre);
         listeFicheLv = (ListView) findViewById(R.id.listeFiche_lv);
         compteurFfTv = (TextView) findViewById(R.id.compteur_ff);
 
@@ -66,7 +65,6 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -86,8 +84,6 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
@@ -108,7 +104,7 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
         protected String doInBackground(String... args) {
             // Construction de l'URL pour passer en parametre l'id de la fiche
             JSONObject json = jParser.makeHttpRequest(URL_FICHE_FRAIS + Global.Utilisateur.Id, "GET", null);
-            Log.i("Reponse ====>", json.toString());
+            Log.i("JSONFicheFrais ======>", json.toString());
             try {
                 // Recuperation des donnees en JSON
                 JSONFicheFrais.Success = json.getInt(Global.TAG_SUCCESS);
@@ -137,7 +133,6 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
 
             runOnUiThread(new Runnable() {
                 public void run() {
-                    titreTv.setText("Liste des fiches frais");
                     compteurFfTv.setText(JSONFicheFrais.FicheFrais.size() + " résultat(s)");
                     FicheFraisAdapter adapter = new FicheFraisAdapter(getApplicationContext(), JSONFicheFrais.FicheFrais);
                     listeFicheLv.setAdapter(adapter);
@@ -166,10 +161,11 @@ public class ListeFicheFraisActivity extends AppCompatActivity {
             TextView tvMois = (TextView) convertView.findViewById(R.id.item_mois);
             TextView tvAnnee = (TextView) convertView.findViewById(R.id.item_annee);
 
-            tvId.setText(String.valueOf(user.Id));
-            tvMois.setText(String.valueOf(user.Mois));
-            tvAnnee.setText(String.valueOf(user.Annee));
-
+            if (user != null){
+                tvId.setText(String.valueOf(user.Id));
+                tvMois.setText(String.valueOf(user.Mois));
+                tvAnnee.setText(String.valueOf(user.Annee));
+            }
             return convertView;
         }
     }

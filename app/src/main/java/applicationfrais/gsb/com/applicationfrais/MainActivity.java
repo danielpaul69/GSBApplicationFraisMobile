@@ -30,12 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     JSONParser jParser = new JSONParser();
 
-    private EditText identifiantEt;
-    private EditText mdpEt;
+    private EditText identifiantEt, mdpEt;
+    private String identifiant, motDePasse;
     private Button connexionBtn;
-
-    private String identifiant;
-    private String motDePasse;
 
     private JSONConnexion JSONConnexion = new JSONConnexion();
 
@@ -57,17 +54,24 @@ public class MainActivity extends AppCompatActivity {
                 identifiant = identifiantEt.getText().toString();
                 motDePasse = mdpEt.getText().toString();
 
-                // Si les champs ne sont pas vides on lance la connexion sinon on affiche une pop up
-                if (identifiant != null && !identifiant.isEmpty() && motDePasse != null && !motDePasse.isEmpty()){
+                if (motDePasse.isEmpty()){
+                    mdpEt.setError("Champ obligatoire");
+                    mdpEt.requestFocus();
+                }
+
+                if (identifiant.isEmpty()){
+                    identifiantEt.setError("Champ obligatoire");
+                    identifiantEt.requestFocus();
+                }
+
+                if (identifiant != null && !identifiant.isEmpty() && motDePasse != null && !motDePasse.isEmpty()) {
                     new TestConnection().execute();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Vous devez renseigner les champs login et mot de passe." , Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    class TestConnection extends AsyncTask<String, String, String> {
+    private class TestConnection extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -120,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
             runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(getApplicationContext(), JSONConnexion.Message , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), JSONConnexion.Message, Toast.LENGTH_LONG).show();
                 }
             });
         }
